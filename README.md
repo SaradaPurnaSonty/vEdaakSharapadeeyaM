@@ -1,4 +1,4 @@
-# aksharapadeeyam
+# vEdaakSharapadeeyaM
 ## Broadly, it can be understood as follows:
 Akṣara – The individual letters, which in the Vedic tradition possess independent potency and significance.
 Pada – Words, encompassing their form, grammatical structure, and semantic content.
