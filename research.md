@@ -23,3 +23,17 @@ This section contains the manuscript research documents for the **Akṣarapadīy
 11. [वैदिकरूपस्य प्रयोजनम्  (The Nature and Purpose of the Vēda)](../Script11.pdf)
 12. [चिनुति (A Study of Divine Manifestation through Yajna)](../Script12.pdf)
 13. [वैदिक शास्त्र दर्शन -वाज्ञज्ञ  (Vēdic Vēdākshara-Insight -The Yajna of Speech)](../Script13.pdf)
+
+## References
+
+<div class="references">
+
+<div class="citation">
+Sonty, S. P. (2026). *Akṣarapadīyam: A Digital Study of Vedic Akṣaras and Padas*. GitHub Pages.
+</div>
+
+<div class="citation">
+Traditional Vedic Manuscripts Collection (Scripts 1–13).
+</div>
+
+</div>
