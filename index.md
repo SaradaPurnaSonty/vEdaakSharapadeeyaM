@@ -49,4 +49,4 @@ In essence, an Akṣarapadīyam constitutes a comprehensive explanation of Vedic
 ## Research Project
 
 **vEdAkhsara Research Project**  
-A digital initiative for preserving and analyzing Vedic linguistic knowledge.
+A initiative for preserving and analyzing Vedic linguistic knowledge.
