@@ -1,4 +1,3 @@
-
 ---
 layout: default
 title: Contact
@@ -21,4 +20,4 @@ aksarapadiyam.sonty@gmail.com
 
 ---
 
-Have any questions or suggestions, please contact via email.
+For quesions or suggestoins, please contact via email.
