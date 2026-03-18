@@ -31,7 +31,17 @@ Click any manuscript to view.
 <!-- ✅ ONLY ONE MODAL (KEEP THIS ONLY) -->
 <div id="pdfModal" class="modal">
 
-<span class="close" onclick="closePDF()">&times;</span>
+<!-- TOP BAR -->
+<div class="pdf-header">
+  <span id="pdfTitle">Manuscript Title</span>
+
+  <div class="controls">
+    <button onclick="zoomOut()">−</button>
+    <button onclick="zoomIn()">+</button>
+    <span id="pageIndicator">1 / 13</span>
+    <span class="close" onclick="closePDF()">&times;</span>
+  </div>
+</div>
 
 <iframe id="pdfFrame"></iframe>
 
