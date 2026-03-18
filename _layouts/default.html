@@ -25,7 +25,6 @@
   background: rgba(0,0,0,0.95);
   z-index: 9999;
   overflow: hidden;
-  padding-top: 60px;
   box-sizing: border-box;
 }
 
@@ -35,12 +34,13 @@
   top: 0;
   left: 0;
   width: 100%;
+  height: 60px; /* fixed header height */
   background: #111;
   color: #FFD700;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 15px;
+  padding: 0 15px;
   box-sizing: border-box;
   z-index: 10000;
 }
@@ -48,7 +48,7 @@
 /* PDF TITLE */
 .pdf-header span#pdfTitle {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   max-width: 50%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -77,19 +77,20 @@
 /* PDF VIEWER */
 #pdfViewer {
   width: 100%;
-  height: calc(100vh - 60px);
+  height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   background: #222;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 70px; /* equal to header height + spacing */
+  box-sizing: border-box;
 }
 
 /* PDF CANVAS */
 #pdfViewer canvas {
-  max-width: 90%;
+  width: 90% !important; /* responsive width */
   height: auto !important;
   margin-bottom: 20px;
   box-shadow: 0 0 15px rgba(0,0,0,0.5);
@@ -125,7 +126,25 @@
   cursor: pointer;
   border-radius: 5px;
 }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .pdf-header span#pdfTitle {
+    font-size: 14px;
+    max-width: 60%;
+  }
+
+  #pdfViewer canvas {
+    width: 95% !important;
+  }
+
+  .pdf-header button {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
 </style>
+
 </head>
 <body>
 
@@ -229,6 +248,7 @@ function renderAllPages(){
       canvas.height = viewport.height;
       canvas.width = viewport.width;
       container.appendChild(canvas);
+
       page.render({ canvasContext: ctx, viewport: viewport }).promise.then(()=>{
         if(i === 1){
           document.getElementById("pageIndicator").innerText = `1 - ${pdfDoc.numPages}`;
@@ -274,4 +294,3 @@ function zoomOut(){
 
 </body>
 </html>
-
