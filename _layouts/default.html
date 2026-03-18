@@ -64,7 +64,8 @@ All rights reserved. This site is part of an academic research initiative in Ved
 
 <script>
 let currentIndex = 0;
-let zoomLevel = 150;
+let scale = 1.5;
+let pdfDoc = null;
 
 const titles = [
 "वेदाक्षर स्वरूपं (Form Of The Vēdākshara)",
@@ -98,25 +99,45 @@ const pdfs = [
 "{{ site.baseurl }}/Script13.pdf"
 ];
 
-function loadPDF(){
+function renderPDF(url){
+pdfjsLib.getDocument(url).promise.then(function(pdf){
+pdfDoc = pdf;
+renderPage(1);
+});
+}
 
-let url = pdfs[currentIndex] +
-"#toolbar=0&zoom=" + zoomLevel + "&t=" + new Date().getTime();
+function renderPage(num){
+pdfDoc.getPage(num).then(function(page){
+let viewport = page.getViewport({ scale: scale });
 
-document.getElementById("pdfFrame").src = url;
+let canvas = document.createElement("canvas");
+let ctx = canvas.getContext("2d");
 
-document.getElementById("pdfTitle").innerText =
-titles[currentIndex];
+canvas.height = viewport.height;
+canvas.width = viewport.width;
+
+document.getElementById("pdfViewer").innerHTML = "";
+document.getElementById("pdfViewer").appendChild(canvas);
+
+page.render({
+canvasContext: ctx,
+viewport: viewport
+});
 
 document.getElementById("pageIndicator").innerText =
-(currentIndex + 1) + " / " + pdfs.length;
+num + " / " + pdfDoc.numPages;
+});
 }
+
 
 function openPDF(index){
 currentIndex = index;
 document.getElementById("pdfModal").style.display = "block";
 document.body.style.overflow = "hidden";
-loadPDF();
+
+document.getElementById("pdfTitle").innerText = titles[index];
+
+renderPDF(pdfs[index]);
 }
 
 function closePDF(){
@@ -126,24 +147,25 @@ document.body.style.overflow = "auto";
 
 function nextPDF(){
 currentIndex = (currentIndex + 1) % pdfs.length;
-loadPDF();
+openPDF(currentIndex);
 }
 
 function prevPDF(){
 currentIndex = (currentIndex - 1 + pdfs.length) % pdfs.length;
-loadPDF();
+openPDF(currentIndex);
 }
 
 function zoomIn(){
-zoomLevel += 20;
-loadPDF();
+scale += 0.2;
+renderPDF(pdfs[currentIndex]);
 }
 
 function zoomOut(){
-zoomLevel = Math.max(80, zoomLevel - 20);
-loadPDF();
+scale = Math.max(1, scale - 0.2);
+renderPDF(pdfs[currentIndex]);
 }
 </script>
+
 
 </body>
 </html>
