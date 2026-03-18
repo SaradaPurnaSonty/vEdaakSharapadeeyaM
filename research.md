@@ -28,19 +28,7 @@ Click any manuscript to view.
 
 </div>
 
-<!-- POPUP VIEWER -->
-<div id="pdfModal" class="modal">
-  <span class="close" onclick="closePDF()">&times;</span>
-
-  <iframe id="pdfFrame" width="100%" height="500px"></iframe>
-
-  <div class="nav-buttons">
-    <button onclick="prevPDF()">⬅ Previous</button>
-    <button onclick="nextPDF()">Next ➡</button>
-  </div>
-</div>
-
-<!-- FULLSCREEN POPUP -->
+<!-- ✅ ONLY ONE MODAL (KEEP THIS ONLY) -->
 <div id="pdfModal" class="modal">
 
 <span class="close" onclick="closePDF()">&times;</span>
