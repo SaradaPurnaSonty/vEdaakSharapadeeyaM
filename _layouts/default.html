@@ -10,9 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  
+
 <style>
-/* ====== MODAL & PDF VIEWER STYLES ====== */
+/* ==================== MODAL & PDF VIEWER ==================== */
 
 /* MODAL */
 .modal {
@@ -25,7 +25,7 @@
   background: rgba(0,0,0,0.95);
   z-index: 9999;
   overflow: hidden;
-  padding-top: 60px; /* space for header */
+  padding-top: 60px;
   box-sizing: border-box;
 }
 
@@ -40,41 +40,44 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 8px 15px;
   box-sizing: border-box;
   z-index: 10000;
 }
 
-/* PDF HEADER LEFT: TITLE */
+/* PDF TITLE */
 .pdf-header span#pdfTitle {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
   max-width: 50%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #FFD700;
 }
 
-/* PDF HEADER RIGHT: BUTTONS */
+/* PDF HEADER BUTTONS */
 .pdf-header div {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
-/* BUTTONS */
+/* PDF HEADER BUTTON STYLE */
 .pdf-header button {
   background: #FFD700;
   border: none;
-  padding: 6px 10px;
+  padding: 5px 10px;
   font-weight: bold;
   cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 /* PDF VIEWER */
 #pdfViewer {
   width: 100%;
-  height: calc(100vh - 70px); /* full height minus header */
+  height: calc(100vh - 60px);
   overflow-y: auto;
   overflow-x: hidden;
   background: #222;
@@ -84,46 +87,74 @@
   padding-top: 20px;
 }
 
-/* CANVAS */
+/* PDF CANVAS */
 #pdfViewer canvas {
-  max-width: 90%; /* fit screen */
+  max-width: 90%;
   height: auto !important;
   margin-bottom: 20px;
   box-shadow: 0 0 15px rgba(0,0,0,0.5);
   background: white;
 }
-</style>
 
+/* CLOSE BUTTON */
+.close {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  z-index: 10001;
+}
+
+/* NAVIGATION BUTTONS INSIDE MODAL */
+.nav-buttons {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 10000;
+}
+
+.nav-buttons button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: #FFD700;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+</style>
 </head>
-  
 <body>
 
 <header>
-<div class="header-container">
-<img src="{{ site.baseurl }}/assets/logo.png" alt="University Logo">
-<div>
-<h1 style="margin:0;">Akṣarapadīyam</h1>
-<p style="margin:0; font-size:14px;">A Vedic Linguistic Research Project</p>
-<p style="margin:0; font-size:13px;">University of Applied Vedic Sciences (Online)</p>
-</div>
-</div>
+  <div class="header-container">
+    <img src="{{ site.baseurl }}/assets/logo.png" alt="University Logo">
+    <div>
+      <h1 style="margin:0; font-size:24px;">Akṣarapadīyam</h1>
+      <p style="margin:0; font-size:14px;">A Vedic Linguistic Research Project</p>
+      <p style="margin:0; font-size:13px;">University of Applied Vedic Sciences (Online)</p>
+    </div>
+  </div>
 
-<nav>
-<a href="{{ site.baseurl }}/">Home</a>
-<a href="{{ site.baseurl }}/text/">Text</a>
-<a href="{{ site.baseurl }}/research/">Research</a>
-<a href="{{ site.baseurl }}/contact/">Contact</a>
-</nav>
+  <nav>
+    <a href="{{ site.baseurl }}/" style="color:#fff;">Home</a>
+    <a href="{{ site.baseurl }}/text/" style="color:#fff;">Text</a>
+    <a href="{{ site.baseurl }}/research/" style="color:#fff;">Research</a>
+    <a href="{{ site.baseurl }}/contact/" style="color:#fff;">Contact</a>
+  </nav>
 </header>
 
 <main>
-{{ content }}
+  {{ content }}
 </main>
 
 <footer>
-<p>© 2025 Akṣarapadīyam Research Project</p>
-<p>Sarada Purna Sonty | University of Applied Vedic Sciences (Online)</p>
-<p style="font-size:12px;">All rights reserved. This site is part of an academic research initiative in Vedic linguistics.</p>
+  <p>© 2025 Akṣarapadīyam Research Project</p>
+  <p>Sarada Purna Sonty | University of Applied Vedic Sciences (Online)</p>
+  <p style="font-size:12px;">All rights reserved. This site is part of an academic research initiative in Vedic linguistics.</p>
 </footer>
 
 <!-- ===== PDF MODAL ===== -->
@@ -198,7 +229,6 @@ function renderAllPages(){
       canvas.height = viewport.height;
       canvas.width = viewport.width;
       container.appendChild(canvas);
-
       page.render({ canvasContext: ctx, viewport: viewport }).promise.then(()=>{
         if(i === 1){
           document.getElementById("pageIndicator").innerText = `1 - ${pdfDoc.numPages}`;
@@ -244,5 +274,4 @@ function zoomOut(){
 
 </body>
 </html>
-
 
