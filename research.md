@@ -43,7 +43,7 @@ Click any manuscript to view.
   </div>
 </div>
 
-<iframe id="pdfFrame"></iframe>
+<div id="pdfViewer"></div>
 
 <div class="nav-buttons">
 <button onclick="prevPDF()">⬅ Previous</button>
