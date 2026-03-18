@@ -22,7 +22,7 @@ Click any manuscript to view.
 <button onclick="openPDF(7)">मन्त्रपुष्पम् (Mantrapushpam)</button>
 <button onclick="openPDF(8)">य एवं वेद (The One Who Knows Thus)</button>
 <button onclick="openPDF(9)">वैदिक पथः (The Vēdic Path)</button>
-<button onclick="openPDF(10)">वैदिकरूपस्य प्रयोजनम्</button>
+<button onclick="openPDF(10)">वैदिकरूपस्य प्रयोजनम्  (The Nature and Purpose of the Vēda)</button>
 <button onclick="openPDF(11)">चिनुति (A Study of Divine Manifestation through Yajna)</button>
 <button onclick="openPDF(12)">वैदिक शास्त्र दर्शन -वाज्ञज्ञ  (Vēdic Vēdākshara-Insight -The Yajna of Speech)</button>
 
