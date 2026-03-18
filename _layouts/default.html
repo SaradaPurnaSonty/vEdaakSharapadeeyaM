@@ -11,47 +11,6 @@
 
 </head>
   
-<script>
-let currentIndex = 0;
-
-const pdfs = [
-"{{ site.baseurl }}/Script2.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script3.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script4.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script5.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script6.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script7.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script8.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script9.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script10.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script11.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script12.pdf#toolbar=0&view=FitH&zoom=125",
-"{{ site.baseurl }}/Script13.pdf#toolbar=0&view=FitH&zoom=125"
-];
-
-function openPDF(index){
-currentIndex = index;
-document.getElementById("pdfModal").style.display = "block";
-document.getElementById("pdfFrame").src = pdfs[index];
-document.body.style.overflow = "hidden";
-}
-
-function closePDF(){
-document.getElementById("pdfModal").style.display = "none";
-document.getElementById("pdfFrame").src = "";
-document.body.style.overflow = "auto";
-}
-
-function nextPDF(){
-currentIndex = (currentIndex + 1) % pdfs.length;
-document.getElementById("pdfFrame").src = pdfs[currentIndex];
-}
-
-function prevPDF(){
-currentIndex = (currentIndex - 1 + pdfs.length) % pdfs.length;
-document.getElementById("pdfFrame").src = pdfs[currentIndex];
-}
-</script>
 <body>
 
 <header>
