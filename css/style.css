@@ -35,13 +35,14 @@ header{
     text-align:center;
 }
 
+
 /* TITLE */
-header h1{
-    font-size:36px;
-    margin:5px 0;
-    font-family:'Noto Serif Devanagari', serif;
-    color:#FFD700;
-    letter-spacing:1px;
+
+header h1 {
+    font-size: 36px; /* adjust bigger */
+    margin: 0;
+    font-family: 'Noto Serif Devanagari', serif;
+    color: #FFD700;
 }
 
 /* TEXT */
