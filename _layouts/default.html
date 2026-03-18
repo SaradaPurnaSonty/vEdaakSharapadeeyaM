@@ -11,26 +11,101 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   
+<style>
+/* ====== MODAL & PDF VIEWER STYLES ====== */
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.95);
+  z-index: 9999;
+  overflow: hidden;
+  padding-top: 60px; /* space for header */
+  box-sizing: border-box;
+}
+
+/* PDF HEADER */
+.pdf-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #111;
+  color: #FFD700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  z-index: 10000;
+}
+
+/* PDF HEADER LEFT: TITLE */
+.pdf-header span#pdfTitle {
+  font-weight: bold;
+  font-size: 16px;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* PDF HEADER RIGHT: BUTTONS */
+.pdf-header div {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* BUTTONS */
+.pdf-header button {
+  background: #FFD700;
+  border: none;
+  padding: 6px 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* PDF VIEWER */
+#pdfViewer {
+  width: 100%;
+  height: calc(100vh - 70px); /* full height minus header */
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+/* CANVAS */
+#pdfViewer canvas {
+  max-width: 90%; /* fit screen */
+  height: auto !important;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  background: white;
+}
+</style>
+
 </head>
   
 <body>
 
 <header>
-
 <div class="header-container">
-
 <img src="{{ site.baseurl }}/assets/logo.png" alt="University Logo">
-
 <div>
 <h1 style="margin:0;">Akṣarapadīyam</h1>
-<p style="margin:0; font-size:14px;">
-A Vedic Linguistic Research Project
-</p>
-<p style="margin:0; font-size:13px;">
-University of Applied Vedic Sciences (Online)
-</p>
+<p style="margin:0; font-size:14px;">A Vedic Linguistic Research Project</p>
+<p style="margin:0; font-size:13px;">University of Applied Vedic Sciences (Online)</p>
 </div>
-
 </div>
 
 <nav>
@@ -39,7 +114,6 @@ University of Applied Vedic Sciences (Online)
 <a href="{{ site.baseurl }}/research/">Research</a>
 <a href="{{ site.baseurl }}/contact/">Contact</a>
 </nav>
-
 </header>
 
 <main>
@@ -47,20 +121,12 @@ University of Applied Vedic Sciences (Online)
 </main>
 
 <footer>
-
 <p>© 2025 Akṣarapadīyam Research Project</p>
-
-<p>
-Sarada Purna Sonty | University of Applied Vedic Sciences (Online)
-</p>
-
-<p style="font-size:12px;">
-All rights reserved. This site is part of an academic research initiative in Vedic linguistics.
-</p>
-
+<p>Sarada Purna Sonty | University of Applied Vedic Sciences (Online)</p>
+<p style="font-size:12px;">All rights reserved. This site is part of an academic research initiative in Vedic linguistics.</p>
 </footer>
 
-<!-- ✅ ADD MODAL HTML HERE, BEFORE </body> -->
+<!-- ===== PDF MODAL ===== -->
 <div id="pdfModal" class="modal">
   <div class="pdf-header">
     <span id="pdfTitle">Title</span>
@@ -75,8 +141,6 @@ All rights reserved. This site is part of an academic research initiative in Ved
   </div>
   <div id="pdfViewer"></div>
 </div>
-
-<!-- ✅ ADD HERE -->
 
 <script>
 let currentIndex = 0;
@@ -116,86 +180,69 @@ const pdfs = [
 ];
 
 function renderPDF(url){
-pdfjsLib.getDocument(url).promise.then(function(pdf){
-pdfDoc = pdf;
-renderAllPages();
-});
+  pdfjsLib.getDocument(url).promise.then(function(pdf){
+    pdfDoc = pdf;
+    renderAllPages();
+  });
 }
 
 function renderAllPages(){
-let container = document.getElementById("pdfViewer");
-container.innerHTML = "";
+  let container = document.getElementById("pdfViewer");
+  container.innerHTML = "";
 
-/* LOOP THROUGH ALL PAGES */
-for(let i = 1; i <= pdfDoc.numPages; i++){
+  for(let i = 1; i <= pdfDoc.numPages; i++){
+    pdfDoc.getPage(i).then(function(page){
+      let viewport = page.getViewport({ scale: scale });
+      let canvas = document.createElement("canvas");
+      let ctx = canvas.getContext("2d");
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+      container.appendChild(canvas);
 
-pdfDoc.getPage(i).then(function(page){
-
-let viewport = page.getViewport({ scale: scale });
-
-let canvas = document.createElement("canvas");
-let ctx = canvas.getContext("2d");
-
-canvas.height = viewport.height;
-canvas.width = viewport.width;
-
-container.appendChild(canvas);
-
-page.render({
-canvasContext: ctx,
-viewport: viewport
-});
-
-});
-
-}
-
-/* PAGE COUNT DISPLAY */
-document.getElementById("pageIndicator").innerText =
-"1 - " + pdfDoc.numPages;
+      page.render({ canvasContext: ctx, viewport: viewport }).promise.then(()=>{
+        if(i === 1){
+          document.getElementById("pageIndicator").innerText = `1 - ${pdfDoc.numPages}`;
+        }
+      });
+    });
+  }
 }
 
 function openPDF(index){
-currentIndex = index;
-
-document.getElementById("pdfModal").style.display = "block";
-document.body.style.overflow = "hidden";
-
-document.getElementById("pdfTitle").innerText = titles[index];
-
-renderPDF(pdfs[index]);
+  currentIndex = index;
+  document.getElementById("pdfModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+  document.getElementById("pdfTitle").innerText = titles[index];
+  renderPDF(pdfs[index]);
 }
 
 function closePDF(){
-document.getElementById("pdfModal").style.display = "none";
-document.body.style.overflow = "auto";
+  document.getElementById("pdfModal").style.display = "none";
+  document.body.style.overflow = "auto";
 }
 
 function nextPDF(){
-currentIndex = (currentIndex + 1) % pdfs.length;
-openPDF(currentIndex);
+  currentIndex = (currentIndex + 1) % pdfs.length;
+  openPDF(currentIndex);
 }
 
 function prevPDF(){
-currentIndex = (currentIndex - 1 + pdfs.length) % pdfs.length;
-openPDF(currentIndex);
+  currentIndex = (currentIndex - 1 + pdfs.length) % pdfs.length;
+  openPDF(currentIndex);
 }
 
-/* ZOOM WORKS AGAIN */
 function zoomIn(){
-scale += 0.2;
-renderPDF(pdfs[currentIndex]);
+  scale += 0.2;
+  renderPDF(pdfs[currentIndex]);
 }
 
 function zoomOut(){
-scale = Math.max(0.6, scale - 0.2);
-renderPDF(pdfs[currentIndex]);
+  scale = Math.max(0.6, scale - 0.2);
+  renderPDF(pdfs[currentIndex]);
 }
-
-  
 </script>
-
 
 </body>
 </html>
+
 
