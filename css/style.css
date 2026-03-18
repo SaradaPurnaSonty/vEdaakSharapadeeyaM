@@ -5,6 +5,62 @@ body{
     background:#f9f6f2;
 }
 
+
+
+
+/* HEADER */
+header{
+    background:#8B0000;
+    color:#FFD700;
+    padding:20px 0;
+    text-align:center;   /* KEY LINE */
+}
+
+/* CENTER EVERYTHING */
+.header-container{
+    display:flex;
+    flex-direction:column;   /* STACK vertically */
+    align-items:center;      /* CENTER horizontally */
+    justify-content:center;
+    gap:10px;
+}
+
+/* LOGO CENTERED */
+.header-container img{
+    height:70px;
+}
+
+/* TITLE */
+header h1{
+    font-size:34px;
+    margin:5px 0;
+    font-family:'Noto Serif Devanagari', serif;
+    color:#FFD700;
+}
+
+/* TEXT */
+.tagline, .university{
+    margin:0;
+}
+
+/* NAVIGATION CENTER */
+nav{
+    margin-top:15px;
+    text-align:center;
+}
+
+nav a{
+    color:#FFD700;
+    margin:0 15px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+
+
+
+
+
 /* HEADER */
 header{
     background:#8B0000;
