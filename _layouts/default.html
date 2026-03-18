@@ -60,6 +60,22 @@ All rights reserved. This site is part of an academic research initiative in Ved
 
 </footer>
 
+<!-- ✅ ADD MODAL HTML HERE, BEFORE </body> -->
+<div id="pdfModal" class="modal">
+  <div class="pdf-header">
+    <span id="pdfTitle">Title</span>
+    <div>
+      <button onclick="prevPDF()">◀ Prev</button>
+      <span id="pageIndicator">0/0</span>
+      <button onclick="nextPDF()">Next ▶</button>
+      <button onclick="zoomOut()">-</button>
+      <button onclick="zoomIn()">+</button>
+      <button onclick="closePDF()">✖ Close</button>
+    </div>
+  </div>
+  <div id="pdfViewer"></div>
+</div>
+
 <!-- ✅ ADD HERE -->
 
 <script>
