@@ -111,12 +111,16 @@ pdfDoc.getPage(num).then(function(page){
 
 let container = document.getElementById("pdfViewer");
 
-/* ✅ AUTO FIT WIDTH */
-let desiredWidth = container.clientWidth * 0.8;   // 80% of screen
+/* BASE VIEWPORT */
 let viewport = page.getViewport({ scale: 1 });
 
-let scale = desiredWidth / viewport.width;
-let scaledViewport = page.getViewport({ scale: scale });
+/* AUTO FIT WIDTH */
+let fitScale = (container.clientWidth * 0.8) / viewport.width;
+
+/* APPLY USER ZOOM */
+let finalScale = fitScale * scale;
+
+let scaledViewport = page.getViewport({ scale: finalScale });
 
 let canvas = document.createElement("canvas");
 let ctx = canvas.getContext("2d");
@@ -138,7 +142,6 @@ num + " / " + pdfDoc.numPages;
 
 });
 }
-
 
 function openPDF(index){
 currentIndex = index;
